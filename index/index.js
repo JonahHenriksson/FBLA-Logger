@@ -120,8 +120,8 @@ function addEvent() {
      var hrs = row.insertCell(1);
      var del = row.insertCell(2);
 
-     event.innerHTML = '<input type="text" onchange="updateEvent(this)"></input>';
-     hrs.innerHTML = '<input type="number" onchange="updateHrs(this)"></input>';
+     event.innerHTML = '<input type="text" class="event-inputs" onchange="updateEvent(this)"></input>';
+     hrs.innerHTML = '<input type="number" class="event-inputs" onchange="updateHrs(this)"></input>';
      del.innerHTML = '<button class="event-del-btns" onclick="delEvent(this)"></button';
 
      events[currentStudent].items.push({ event: "", hours: 0 });
@@ -135,8 +135,8 @@ function addEventValues() {
           var hrs = row.insertCell(1);
           var del = row.insertCell(2);
 
-          event.innerHTML = '<input type="text" onchange="updateEvent(this)"></input>';
-          hrs.innerHTML = '<input type="number" onchange="updateHrs(this)"></input>';
+          event.innerHTML = '<input type="text" class="event-inputs" onchange="updateEvent(this)"></input>';
+          hrs.innerHTML = '<input type="number" class="event-inputs" onchange="updateHrs(this)"></input>';
           del.innerHTML = '<button class="event-del-btns" onclick="delEvent(this)"></button';
 
           event.children[0].value = events[currentStudent].items[i].event;
@@ -386,4 +386,11 @@ function loadFile(data) {
                +obj.events[j].values[2].userEnteredValue.numberValue
           ]);
      }
+}
+
+// open a links in external browser
+function openExternalLink(e, o) {
+     e.preventDefault();
+     const { shell } = require('electron').remote;
+     shell.openExternal(o.href);
 }

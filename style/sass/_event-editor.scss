@@ -1,5 +1,6 @@
 #popup-canvas {
-
+    max-height: 80%;
+    overflow-y: scroll;
     #close-events-btn {
         position: absolute;
         width: 25px;
@@ -30,6 +31,7 @@
             background-color: transparent;
             border: none;
         }
+        
 
         th, td {
             padding: 5px;
@@ -74,4 +76,10 @@
     top: 25px;
     background-color: #000000;
     opacity: 25%;
+}
+
+.event-inputs {
+    font-family: "Roboto";
+    border: none;
+    padding-left: 5px;
 }

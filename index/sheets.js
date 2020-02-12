@@ -5,29 +5,22 @@ const TOKEN_PATH = 'token.json';
 
 var spreadsheetId = null; // Google ID of spreadsheet, used when saving an opend sheet
 
+var credentials = {"web":{"client_id":"603803812920-51u22957palnoc9hgeq7f16aeie981r9.apps.googleusercontent.com","project_id":"divine-command-251420","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"EYWfzDcdIR4KPfNFi_zul-3q","redirect_uris":["http://localhost"],"javascript_origins":["http://localhost"]}};
+
 // Open Google sheet
 function accessSheets() {
-     fs.readFile('credentials.json', (err, content) => {
-          if (err) return console.log('Error loading client secret file:', err);
-          authorize(JSON.parse(content), openSheet);
-        });
+     authorize(credentials, openSheet);
         
 };
 
 // Create new Google sheet
 function createNewSheet() {
-     fs.readFile('credentials.json', (err, content) => {
-          if(err) return console.log('Error loading client secret file: ', err);
-          authorize(JSON.parse(content), newSheet);
-     })
+     authorize(credentials, newSheet);
 }
 
 // Save Google sheet
 function saveSheet() {
-     fs.readFile('credentials.json', (err, content) => {
-          if(err) return console.log('Error loading client secret file: ', err);
-          authorize(JSON.parse(content), updateSheet);
-     })
+     authorize(credentials, updateSheet);
 }
 
 // Authorize app to access user's Google sheets

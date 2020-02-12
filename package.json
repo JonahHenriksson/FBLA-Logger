@@ -1,5 +1,6 @@
 {
   "name": "fbla-project",
+  "productName": "FBLA Logger",
   "version": "1.0.0",
   "description": "FBLA Community Service Hour Logger",
   "main": "main.js",
@@ -13,7 +14,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "start.bat",
-    "package": "electron-packager . --asar"
+    "package": "electron-packager . --asar --prune --overwrite --icon fbla-ico.ico"
   },
   "author": "Jonah Henriksson",
   "license": "ISC"

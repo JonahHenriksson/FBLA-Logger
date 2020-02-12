@@ -60,9 +60,10 @@
                     <h2>File</h2>
                     <p>The File tab holds buttons for saving and opening files:<br>The Google buttons are for saving and opening spreadsheets to your Google Drive<br>The local buttons are for opening and saving JSON files to your computer</p>
                     <h3>Google Sheets</h3>
-                    <p>Google Sheets requires a Google account to access.<br>When saved, the files will be located in your Google Drive<br>To load a sheet, copy and paste the URL of the sheet into the text box</p>
+                    <p>Google Sheets requires a Google account to access.<br>When saved, the files will be located in your Google Drive<br>To load a sheet, copy and paste the URL of the sheet into the text box<br>Google sheets allows for a single sheet to be edited by multiple people. Enable sheet sharing in your Google Drive to do so.</p>
+                    <br>
                     <h3>Local Files</h3>
-                    <p>Saving or opening a local file will open up a file explorer to find the file location</p>
+                    <p>Saving or opening a local file will open up a file explorer to find the file location.<br>It allows you to keep a local copy of your file</p>
                     <h2>Editor</h2>
                     <p>The editor has a table of students.<br>Adding a student will add a new row to the table.<br>The Student Number column is unique, a repeating number will create an error.<br>Student Number and Grade Level are number-only fields</p>
                     <br>
@@ -72,6 +73,10 @@
                     <p>The CSA is dynamic; it will automatically set the award based off of the student's total hours</p>
                     <h3>Community Service Award Report</h3>
                     <p>The CSA Report gives the total number of hours in each category</p>
+                    <h3>Info Bar</h3>
+                    <p>The info bar on the bottom shows where you are in the logger. <br> It is helpful when keeping track of a large number of students</p>
+                    <h2>About</h2>
+                    <p>Icons from <a href="https://icons8.com" onclick="openExternalLink(event, this)">https://icons8.com</a><br>Roboto Font from <a href="https://fonts.google.com/specimen/Roboto" onclick="openExternalLink(event, this)">Google</a></p>
                 </div>
             </div>
         </div>
@@ -80,21 +85,23 @@
         <div id="popup-canvas" class="popup">
             <button id="close-events-btn" onclick="closeHrs()"></button>
             <h1>Events</h1>
-            <table id="events-table">
-                <thead>
-                    <tr>
-                        <th>Event</th>
-                        <th>Hours</th>
-                        <th></th>
-                    </tr>
-                </thead><!--
-                --><tbody>
+            <div class="area">
+                <table id="events-table">
+                    <thead>
+                        <tr>
+                            <th>Event</th>
+                            <th>Hours</th>
+                            <th></th>
+                        </tr>
+                    </thead><!--
+                    --><tbody>
 
-                </tbody>
-                <tfoot>
-                    <tr><td id="add-event-row" colspan="3"><button id ="add-event-btn" onclick="addEvent()">Add Event</button></td></tr>
-                </tfoot>
-            </table>
+                    </tbody>
+                    <tfoot>
+                        <tr><td id="add-event-row" colspan="3"><button id ="add-event-btn" onclick="addEvent()">Add Event</button></td></tr>
+                    </tfoot>
+                </table>
+            </div>
         </div>
         <div id="category-report" class="popup">
             <button id="close-report-btn" onclick="closeCSAReport()"></button>

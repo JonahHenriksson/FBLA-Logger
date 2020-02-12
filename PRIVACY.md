@@ -1,0 +1,2 @@
+# FBLA Logger Privacy Policy
+ The FBLA logger does not collect any personal information. It is self contained and does not have servers for holding users' personal information. It only accesses Google sheets specified by the user, when the user specifies them.

@@ -360,13 +360,12 @@ function tableToObject() {
 function eventsToObject() {
      var o = [];
      for (var i = 0; i < events.length; i++) {
-          var studentNumber = document.getElementById("editor-table").getElementsByTagName("tbody")[0].rows[i].cells[0].children[0].value;
           for (var j = 0; j < events[i].items.length; j++) {
                var item = {
                     values: [
                          {
                               userEnteredValue: {
-                                   numberValue: studentNumber
+                                   numberValue: events[i].id
                               }
                          },
                          {

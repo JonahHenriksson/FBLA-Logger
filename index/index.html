@@ -24,14 +24,14 @@
                     <p><button id="openGoogleSheetBtn" class="file-btns" onclick="accessSheets()">Open Google Sheet</button> <input id="google-sheet-loc" class="file-text-inputs" type="url" placeholder="Paste Sheet URL Here"></input></p>
                     <p><button id="newGoogleSheetBtn" class="file-btns" onclick="createNewSheet()">Save as New Google Sheet</button> <input id="newGoogleSheetName" class="file-text-inputs" type="text" placeholder="Sheet Name"></input></p>
                     <p><button id="saveGoogleSheetBtn" class="file-btns" onclick="saveSheet()">Save Google Sheet</button></p>
-                    <p><button id="openLocalFile" class="file-btns">Open Local File</button></p>
-                    <p><button id="saveLocalFile" class="file-btns">Save Local File</button></p>
+                    <p><button id="openLocalFile" class="file-btns" onclick="openLocalDialog()">Open Local File</button></p>
+                    <p><button id="saveLocalFile" class="file-btns" onclick="saveLocalDialog()">Save Local File</button></p>
                 </div>
             </div>
 
             <div id="Editor" style="display: block;" class="tab-content">
                 <div class="area">
-                    <h1>Editor</h1>
+                    <h1>Editor <button id="CSAReportBtn" onclick="openCSAReport()">Hours per Category</button></h1>
                     <table id="editor-table">
                         <thead>
                             <tr>
@@ -70,6 +70,23 @@
                 <tfoot>
                     <tr><td id="add-event-row" colspan="3"><button id ="add-event-btn" onclick="addEvent()">Add Event</button></td></tr>
                 </tfoot>
+            </table>
+        </div>
+        <div id="category-report" class="popup">
+            <button id="close-report-btn" onclick="closeCSAReport()"></button>
+            <table id="category-report-table">
+                <tr>
+                    <th>NA</th>
+                    <th>CSA Community</th>
+                    <th>CSA Service</th>
+                    <th>CSA Achievement</th>
+                </tr>
+                <tr>
+                    <td id="csa-na-value"></td>
+                    <td id="csa-community-value"></td>
+                    <td id="csa-service-value"></td>
+                    <td id="csa-achievement-value"></td>
+                </tr>
             </table>
         </div>
         <div id="info-bar">Logger>Editor</div>

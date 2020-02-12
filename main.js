@@ -8,13 +8,12 @@ function initApplication() {
             nodeIntegration: true
         },
         frame: false,
-        minWidth: 550,
-        minHeight: 400
+        minWidth: 750,
+        minHeight: 500,
+        icon: 'fbla-ico.ico'
     });
 
     win.loadFile('index/index.html');
-
-    win.webContents.openDevTools();
 }
 
 app.on('ready', initApplication);

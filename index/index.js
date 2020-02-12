@@ -65,7 +65,7 @@ function addStudentValues(values) {
      lname.children[0].value = values[2];
      glvl.children[0].value = values[3];
 
-     events.push({id: 0, items: [], total: 0 });
+     events.push({id: values[0], items: [], total: 0 });
 }
 
 function addEventValuesFromSheet(row) {
@@ -90,9 +90,12 @@ function addEventValuesFromSheet(row) {
 
 function delStudent(o) {
      var p = o.parentNode.parentNode;
-     var i = o.parentNode.parentNode.cellIndex;
+     var i = o.parentNode.parentNode.rowIndex - 1;
      p.parentNode.removeChild(p);
+     console.log(i);
+     console.log(events[i]);
      events.splice(i, 1);
+     
 }
 
 function editHrs(o) {
@@ -152,6 +155,7 @@ function updateStudentNumber(o) {
                }
           }
      }
+     events[o.parentNode.parentNode.rowIndex - 1].id = o.value;
 }
 
 function updateHrs(o) {
@@ -208,6 +212,46 @@ function closeHrs() {
      document.getElementById("blocker").style.display = "none";
 }
 
+function openCSAReport() {
+     document.getElementById("blocker").style.display = "block";
+     var report = document.getElementById('category-report');
+     report.style.display = 'block';
+     document.getElementById("info-bar").innerText = ("Logger>Editor>CSA_Report");
+     var tableRef = document.getElementById("editor-table").getElementsByTagName("tbody")[0];
+     var na = 0;
+     var csac = 0;
+     var csas = 0;
+     var csaa = 0;
+     for (var i = 0; i < tableRef.rows.length; i++) {
+          var v = tableRef.rows[i].cells[5].innerText;
+          var h = tableRef.rows[i].cells[4].children[0].innerText;
+          if (v == "NA") {
+               na += +h;
+          }
+          else if (v == "CSA Community") {
+               csac += +h;
+          }
+          else if (v == "CSA Service") {
+               csas += +h;
+          }
+          else if (v == "CSA Achievement") {
+               csaa += +h;
+          }
+     }
+     document.getElementById('csa-na-value').innerText = na;
+     document.getElementById('csa-community-value').innerText = csac;
+     document.getElementById('csa-service-value').innerText = csas;
+     document.getElementById('csa-achievement-value').innerText = csaa;
+
+}
+
+function closeCSAReport() {
+     document.getElementById("blocker").style.display = "none";
+     document.getElementById('category-report').style.display = 'none';
+     document.getElementById("info-bar").innerText = ("Logger>Editor");
+
+}
+
 (function () {
 
     const {BrowserWindow} = require('electron').remote; 
@@ -246,3 +290,80 @@ function closeHrs() {
    };
 
 })();
+
+function saveLocalDialog() {
+     var remote = require('electron').remote;
+     var app = remote.app;
+     var userChosenPath = dialog.showSaveDialogSync({"defaultPath": app.defaultPath, "filters": [{"name": 'JSON', "extensions":['json']}]});
+
+     if (userChosenPath) {
+          saveLocal(userChosenPath, generateLocalFile());
+     }
+}
+
+function saveLocal(path, content) {
+     var fs = require('fs');
+     try {
+          fs.writeFileSync(path, content, 'utf-8');
+     }
+     catch (e) {
+          const options = {
+               title: 'FBLA Logger',
+               type: 'error',
+               message: 'Failed to save file'
+          };
+          dialog.showMessageBox(null, options);
+     }
+}
+
+function generateLocalFile() {
+     console.log(JSON.stringify({ student: tableToObject(), events: eventsToObject() }));
+     return JSON.stringify({ students: tableToObject(), events: eventsToObject() });
+}
+
+function openLocalDialog() {
+     var remote = require('electron').remote;
+     var app = remote.app;
+     var userChosenPath = dialog.showOpenDialogSync({"defaultPath": app.defaultPath, "filters": [{"name": 'JSON', "extensions":['json']}]});
+
+     if (userChosenPath) {
+          openLocal(userChosenPath[0]);
+     }
+}
+
+function openLocal(path) {
+     var fs = require('fs');
+     fs.readFile(path, 'utf-8', function (err, data) {
+          if (err) {
+               const options = {
+                    title: 'FBLA Logger',
+                    type: 'error',
+                    message: 'Failed to save file'
+               };
+               dialog.showMessageBox(null, options);
+               return;
+          }
+          else {
+               loadFile(data);
+          }
+     });
+}
+
+function loadFile(data) {
+     var obj = JSON.parse(data);
+     for (var i = 0; i < obj.students.length; i++) {
+          addStudentValues([
+               +obj.students[i].values[0].userEnteredValue.numberValue,
+               obj.students[i].values[1].userEnteredValue.stringValue,
+               obj.students[i].values[2].userEnteredValue.stringValue,
+               +obj.students[i].values[3].userEnteredValue.numberValue
+          ]);
+     }
+     for (var j = 0; j < obj.events.length; j++) {
+          addEventValuesFromSheet([
+               +obj.events[j].values[0].userEnteredValue.numberValue,
+               obj.events[j].values[1].userEnteredValue.stringValue,
+               +obj.events[j].values[2].userEnteredValue.numberValue
+          ]);
+     }
+}

@@ -39,51 +39,17 @@ function authorize(credentials, callback) {
 function getNewToken(oAuth2Client, callback) {
      const authUrl = oAuth2Client.generateAuthUrl({
        access_type: 'offline',
-       scope: SCOPES,
-       redirect_uris: 'http://localhost'
+       scope: SCOPES
      });
      const { remote } = require('electron');
-     let win = new remote.BrowserWindow({
-          parent: remote.getCurrentWindow(),
-          modal: true,
-          autoHideMenuBar: true,
-          width: 360,
-          height: 585,
-          resizable: false,
-          webPreferences: {
-               nodeIntegration: false,
-               webSecurity: false
-          }
-     });
-     
-     win.on('closed', () => { console.error("Closed before handled")});
-     win.loadURL(authUrl);
-     win.webContents.on('will-redirect', (event, url) => {
-          console.log("New URL: " + url)
-          const {parse} = require('url');
-          const query = parse(url, true).query
-          if (query) {
-               if (query.error) {
-                    console.error(query.error);
-                    return;
-               } else if (query.code) {
-                    win.removeAllListeners('closed')
-                    win.close();
-                    oAuth2Client.getToken(query.code, (err, token) => {
-                         if (err) return console.error('Error while trying to retrieve access token', err);
-                         oAuth2Client.setCredentials(token);
-                         fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
-                              if (err) return console.error(err);
-                              console.log('Token stored to', TOKEN_PATH);
-                         });
-                         callback(oAuth2Client);
-                    });
-               }
-          }
-     });
-     console.log(authUrl);
+     const { shell } = remote;
+     shell.openExternal(authUrl);
 }
 
+
+function getCode() {
+
+}
 
 // Callback to open a sheet and parse it
 function openSheet(auth) {

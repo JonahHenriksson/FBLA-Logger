@@ -2,4 +2,5 @@ node_modules
 FBLA Logger-win32-x64
 token.json
 credentials.json
+Output
 FBLALoggerSetup.exe

@@ -16,6 +16,8 @@ function initApplication() {
     });
 
     win.loadFile('index/index.html');
+
+    win.webContents.openDevTools();
 }
 
 // Code entry point

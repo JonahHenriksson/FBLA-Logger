@@ -47,6 +47,8 @@ function getNewToken(oAuth2Client, callback) {
      const { remote } = require('electron');
      const { shell } = remote;
      shell.openExternal(authUrl);
+     publicAuth = oAuth2Client;
+     publicCallback = callback;
      document.getElementById("code-popup").style.display = "block";
      document.getElementById("blocker").style.display = "block";
 }

@@ -1,8 +1,9 @@
-var events = [];
-var currentStudent = 0;
+var events = []; // Array of events, since the popup is used multiple times, there must be a way to store the events
+var currentStudent = 0; // Current student opened by pop up
 
 const {dialog} = require('electron').remote;
 
+// Switch to a tab
 function openTab(evt, tabName) {
     var i, tabcontent, tabs;
 
@@ -21,6 +22,7 @@ function openTab(evt, tabName) {
     document.getElementById("info-bar").innerText = "Logger>" + tabName;
 }
 
+// Add a student when button is pressed
 function addStudent() {
      var row = document.getElementById("editor-table").getElementsByTagName("tbody")[0].insertRow(-1);
      var id = row.insertCell(0);
@@ -42,6 +44,7 @@ function addStudent() {
      events.push({ items: [] });
 }
 
+// Add student from a row of values, used when opening a file
 function addStudentValues(values) {
      var row = document.getElementById("editor-table").getElementsByTagName("tbody")[0].insertRow(-1);
      var id = row.insertCell(0);
@@ -68,6 +71,7 @@ function addStudentValues(values) {
      events.push({id: values[0], items: [], total: 0 });
 }
 
+// Add event from row of values, used when opening a file
 function addEventValuesFromSheet(row) {
      var tableRef = document.getElementById('editor-table').getElementsByTagName('tbody')[0];
      for (var j = 0; j < events.length; j++) {
@@ -83,21 +87,20 @@ function addEventValuesFromSheet(row) {
      currentStudent = events.length;
      events.push({id: row[0], items: [{event: row[1], hours: row[2]}], total: row[2]});
      tableRef.rows[currentStudent].cells[4].children[0].innerHTML = events[currentStudent].total;
-     console.log(events[currentStudent].total);
      updateCSA(events[currentStudent].total);
      
 }
 
+// Delete a student
 function delStudent(o) {
      var p = o.parentNode.parentNode;
      var i = o.parentNode.parentNode.rowIndex - 1;
      p.parentNode.removeChild(p);
-     console.log(i);
-     console.log(events[i]);
      events.splice(i, 1);
      
 }
 
+// Open the events popup and populates it with relevant data
 function editHrs(o) {
      var i = o.parentNode.parentNode.rowIndex;
      var canvas = document.getElementById('popup-canvas');
@@ -110,6 +113,7 @@ function editHrs(o) {
      document.getElementById("blocker").style.display = "block";
 }
 
+// Add an event when button is pressed
 function addEvent() {
      var row = document.getElementById('events-table').getElementsByTagName("tbody")[0].insertRow(-1);
      var event = row.insertCell(0);
@@ -123,6 +127,7 @@ function addEvent() {
      events[currentStudent].items.push({ event: "", hours: 0 });
 }
 
+// Populates event popup table with student events
 function addEventValues() {
      for (var i = 0; i < events[currentStudent].items.length; i++) {
           var row = document.getElementById('events-table').getElementsByTagName("tbody")[0].insertRow(-1);
@@ -139,6 +144,7 @@ function addEventValues() {
      }
 }
 
+// Checks if the student number is unique and sets the id to it, called on change
 function updateStudentNumber(o) {
      var tableRef = document.getElementById("editor-table").getElementsByTagName("tbody")[0];
      if (o.value != "") {
@@ -158,16 +164,19 @@ function updateStudentNumber(o) {
      events[o.parentNode.parentNode.rowIndex - 1].id = o.value;
 }
 
+// Update the event hours
 function updateHrs(o) {
      var i = o.parentNode.parentNode.rowIndex;
      events[currentStudent].items[i-1].hours = o.value;
 }
 
+// update event description/name
 function updateEvent(o) {
      var i = o.parentNode.parentNode.rowIndex;
      events[currentStudent].items[i-1].event = o.value;
 }
 
+// Update CSA based on total hours
 function updateCSA(v) {
      var x;
      if (v >= 500) {
@@ -187,6 +196,7 @@ function updateCSA(v) {
      tableRef.rows[currentStudent].cells[5].innerText = x;
 }
 
+// Delete an event from student
 function delEvent(o) {
      var p = o.parentNode.parentNode;
      var i = o.parentNode.parentNode.cellIndex;
@@ -194,6 +204,7 @@ function delEvent(o) {
      events[currentStudent].items.splice(i - 1, 1);
 }
 
+// Close the event popup
 function closeHrs() {
      var canvas = document.getElementById('popup-canvas');
      canvas.style.display = 'none';
@@ -212,6 +223,7 @@ function closeHrs() {
      document.getElementById("blocker").style.display = "none";
 }
 
+// Open the CSA report popup and update the report
 function openCSAReport() {
      document.getElementById("blocker").style.display = "block";
      var report = document.getElementById('category-report');
@@ -245,6 +257,7 @@ function openCSAReport() {
 
 }
 
+// Close the CSA report popup
 function closeCSAReport() {
      document.getElementById("blocker").style.display = "none";
      document.getElementById('category-report').style.display = 'none';
@@ -252,6 +265,7 @@ function closeCSAReport() {
 
 }
 
+// Set window button handlers to appropriate functions
 (function () {
 
     const {BrowserWindow} = require('electron').remote; 
@@ -291,6 +305,7 @@ function closeCSAReport() {
 
 })();
 
+// Open save dialog
 function saveLocalDialog() {
      var remote = require('electron').remote;
      var app = remote.app;
@@ -301,6 +316,7 @@ function saveLocalDialog() {
      }
 }
 
+// Saves content to path
 function saveLocal(path, content) {
      var fs = require('fs');
      try {
@@ -316,11 +332,13 @@ function saveLocal(path, content) {
      }
 }
 
+// Creates the content for file
 function generateLocalFile() {
      console.log(JSON.stringify({ student: tableToObject(), events: eventsToObject() }));
      return JSON.stringify({ students: tableToObject(), events: eventsToObject() });
 }
 
+// Open open dialog
 function openLocalDialog() {
      var remote = require('electron').remote;
      var app = remote.app;
@@ -331,6 +349,7 @@ function openLocalDialog() {
      }
 }
 
+// open local file
 function openLocal(path) {
      var fs = require('fs');
      fs.readFile(path, 'utf-8', function (err, data) {
@@ -349,6 +368,7 @@ function openLocal(path) {
      });
 }
 
+// Parses data to tables
 function loadFile(data) {
      var obj = JSON.parse(data);
      for (var i = 0; i < obj.students.length; i++) {

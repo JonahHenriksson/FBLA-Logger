@@ -3,8 +3,9 @@ const {google} = require('googleapis');
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets'];
 const TOKEN_PATH = 'token.json';
 
-var spreadsheetId = null;
+var spreadsheetId = null; // Google ID of spreadsheet, used when saving an opend sheet
 
+// Open Google sheet
 function accessSheets() {
      fs.readFile('credentials.json', (err, content) => {
           if (err) return console.log('Error loading client secret file:', err);
@@ -13,6 +14,7 @@ function accessSheets() {
         
 };
 
+// Create new Google sheet
 function createNewSheet() {
      fs.readFile('credentials.json', (err, content) => {
           if(err) return console.log('Error loading client secret file: ', err);
@@ -20,6 +22,7 @@ function createNewSheet() {
      })
 }
 
+// Save Google sheet
 function saveSheet() {
      fs.readFile('credentials.json', (err, content) => {
           if(err) return console.log('Error loading client secret file: ', err);
@@ -27,6 +30,7 @@ function saveSheet() {
      })
 }
 
+// Authorize app to access user's Google sheets
 function authorize(credentials, callback) {
      const {client_secret, client_id, redirect_uris} = credentials.web;
      const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
@@ -38,6 +42,7 @@ function authorize(credentials, callback) {
      });
 }
 
+// If a token is not already saved to the computer, it gets a new one by opening Google's OAuth2 client, and getting a token
 function getNewToken(oAuth2Client, callback) {
      const authUrl = oAuth2Client.generateAuthUrl({
        access_type: 'offline',
@@ -86,6 +91,8 @@ function getNewToken(oAuth2Client, callback) {
      console.log(authUrl);
 }
 
+
+// Callback to open a sheet and parse it
 function openSheet(auth) {
      const sheets = google.sheets({version: 'v4', auth});
      var query = document.getElementById('google-sheet-loc').value.match('(?<=d\/)(.*)(?=\/)');
@@ -160,8 +167,10 @@ function openSheet(auth) {
      spreadsheetId = query;
 }
 
+// Callback to create a new sheet
 function newSheet(auth) {
      const sheets = google.sheets({version: 'v4', auth});
+     // request is the actual data being sent about the spread sheet
      var request = {
           resource: {
                properties: {
@@ -295,10 +304,12 @@ function newSheet(auth) {
           auth: auth
      };
 
+     // Adds user defined data to the request
      request.resource.sheets[0].data[0].rowData.push(...tableToObject());
 
      request.resource.sheets[1].data[0].rowData.push(...eventsToObject());
 
+     // Actual request command
      sheets.spreadsheets.create(request, function(err, response) {
           if (err) {
                console.error(err);
@@ -323,6 +334,7 @@ function newSheet(auth) {
      });
 }
 
+// Turn students table to JS object to send to Google sheet
 function tableToObject() {
      var o = [];
      var tableRef = document.getElementById('editor-table').getElementsByTagName('tbody')[0];
@@ -346,7 +358,7 @@ function tableToObject() {
                     item.values.push({userEnteredValue: { numberValue: child.value } });
                }
                else if (j == 4) {
-                    item.values.push({userEnteredValue: { formulaValue: '=SUM(FILTER(Events!C2:C, Events!A2:A=A' + (i + 2) + '))' }});
+                    item.values.push({userEnteredValue: { formulaValue: '=SUM(FILTER(Events!C2:C, Events!A2:A=A' + (i + 2) + '))' }}); // Formulas are used for dynamic input
                }
                else if (j == 5) {
                     item.values.push({userEnteredValue: { formulaValue: '=IFS(E'+ (i + 2) + ' >= 500, "CSA Achievement", E' + (i + 2) + ' >= 200, "CSA Service", E' + (i + 2) + ' >= 50, "CSA Community", TRUE, "NA")' }});
@@ -357,6 +369,7 @@ function tableToObject() {
      return o;
 }
 
+// Turn events array to JS object to send to Google
 function eventsToObject() {
      var o = [];
      for (var i = 0; i < events.length; i++) {
@@ -386,6 +399,7 @@ function eventsToObject() {
      return o;
 }
 
+// Callback to save/update a Google sheet
 function updateSheet(auth) {
      if (spreadsheetId == null) {
           const options = {
@@ -398,6 +412,7 @@ function updateSheet(auth) {
           return;
      }
      const sheets = google.sheets({version: 'v4', auth});
+     // Request holds changes
      var request = {
           spreadsheetId: spreadsheetId,
           resource: {
@@ -410,7 +425,7 @@ function updateSheet(auth) {
                                    startColumnIndex: 0,
                                    endColumnIndex: 6
                               },
-                              fields : "*",
+                              fields : "*", // range + fields allows for bulk data overwrite, without defining empties
                               rows: []
                          }
                     },

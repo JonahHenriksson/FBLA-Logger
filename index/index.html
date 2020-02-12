@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- Links generated CSS -->
         <link rel="stylesheet" href="../style/css/index.css">
     </head>
 
@@ -15,7 +16,8 @@
         </div>
         <div id="tab-menu">
             <button class="tab" onclick="openTab(event, 'File')">File</button><!--
-            --><button class="tab active" onclick="openTab(event, 'Editor')">Editor</button>
+            --><button class="tab active" onclick="openTab(event, 'Editor')">Editor</button><!--
+            --><button class="tab" onclick="openTab(event, 'Help')" style="float: right; width: 20px;">?</button>
         </div>
         <div id="content">
             <div id="File" class="tab-content">
@@ -51,7 +53,29 @@
                     </table>
                 </div>
             </div>
+
+            <div id="Help" class="tab-content">
+                <div class="area">
+                    <h1>Help</h1>
+                    <h2>File</h2>
+                    <p>The File tab holds buttons for saving and opening files:<br>The Google buttons are for saving and opening spreadsheets to your Google Drive<br>The local buttons are for opening and saving JSON files to your computer</p>
+                    <h3>Google Sheets</h3>
+                    <p>Google Sheets requires a Google account to access.<br>When saved, the files will be located in your Google Drive<br>To load a sheet, copy and paste the URL of the sheet into the text box</p>
+                    <h3>Local Files</h3>
+                    <p>Saving or opening a local file will open up a file explorer to find the file location</p>
+                    <h2>Editor</h2>
+                    <p>The editor has a table of students.<br>Adding a student will add a new row to the table.<br>The Student Number column is unique, a repeating number will create an error.<br>Student Number and Grade Level are number-only fields</p>
+                    <br>
+                    <h3>Community Hours Popup</h3>
+                    <p>The Community Hours column has buttons that display the total hours.<br>When pressed, they open a popup to the student's event table.<br>This table allows for events to be added or removed to a student.</p>
+                    <h3>Community Service Award</h3>
+                    <p>The CSA is dynamic; it will automatically set the award based off of the student's total hours</p>
+                    <h3>Community Service Award Report</h3>
+                    <p>The CSA Report gives the total number of hours in each category</p>
+                </div>
+            </div>
         </div>
+        <!-- Blocker prevents any mouse clicks under the popups -->
         <div id="blocker"></div>
         <div id="popup-canvas" class="popup">
             <button id="close-events-btn" onclick="closeHrs()"></button>

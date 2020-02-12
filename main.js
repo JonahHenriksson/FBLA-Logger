@@ -1,5 +1,7 @@
+
 const {app, BrowserWindow, protocol} = require('electron');
 
+// Creates a window
 function initApplication() {
     let win = new BrowserWindow({
         width: 800,
@@ -16,4 +18,5 @@ function initApplication() {
     win.loadFile('index/index.html');
 }
 
+// Code entry point
 app.on('ready', initApplication);

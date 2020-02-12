@@ -1,5 +1,7 @@
-
-$background-color: #222222;
+// SCSS is used to boost productivity when working with large sites or apps
+// The index is where all the SCSS files are merged
+// Font Roboto from Google
+// Icons from Icons8
 
 @import 'window-bar';
 @import 'tab-menu';
@@ -11,12 +13,12 @@ $background-color: #222222;
 body {
     padding: 0;
     margin: 0;
-    background-color: $background-color;
+    background-color: #222222;
     font-family: "Roboto";
     color: white;
 }
 
-h1, p {
+h1, h2, h3, p {
     margin-left: 5%;
 }
 
@@ -50,6 +52,7 @@ p {
     box-shadow: 0px 0px 5px #555555;
 }
 
+// Roboto is a custom font from Google
 @font-face {
     font-family: "Roboto";
     src: url("../fonts/roboto/Roboto-Regular.eot");

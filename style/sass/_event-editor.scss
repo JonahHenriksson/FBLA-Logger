@@ -1,0 +1,77 @@
+#popup-canvas {
+
+    #close-events-btn {
+        position: absolute;
+        width: 25px;
+        height: 25px;
+        background: url("../icons/close-btn.png") no-repeat;
+        background-size: 50%;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        right: 0;
+        top: 0;
+    }
+
+    #events-table {
+        width: 90%;
+        background-color: #666666;
+        margin-left: 5%;
+        margin-right: 5%;
+        table-layout: fixed;
+        border-collapse: collapse;
+
+        .event-del-btns {
+            width: 25px;
+            height: 25px;
+            background: url("../icons/close-btn.png") no-repeat;
+            background-size: 50%;
+            background-position: center;
+            background-color: transparent;
+            border: none;
+        }
+
+        th, td {
+            padding: 5px;
+            text-align: center;
+            &:last-child {
+                width: 25px;
+                padding: none;
+            }
+        }
+
+        tr {
+            text-align: center;
+        }
+
+        th+th, td+td {
+            border-left: 3px solid #555555;
+        }
+
+        #add-event-btn {
+            border: none;
+            background-color: transparent;
+            color: white;
+            font-family: "Roboto";
+            width: 100%;
+            border: none;
+            &:focus {
+                outline: none;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+#blocker {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 25px;
+    background-color: #000000;
+    opacity: 25%;
+}

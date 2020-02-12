@@ -1,0 +1,56 @@
+
+$background-color: #222222;
+
+@import 'window-bar';
+@import 'tab-menu';
+@import 'editor-table';
+@import 'event-editor';
+@import 'file';
+
+body {
+    padding: 0;
+    margin: 0;
+    background-color: $background-color;
+    font-family: "Roboto";
+    color: white;
+}
+
+h1, p {
+    margin-left: 5%;
+}
+
+p {
+    height: 45px;
+}
+
+#content {
+    background-color: transparent;
+    position: fixed;
+    height: 80%;
+    width: 100%;
+    overflow-y:auto;
+}
+
+.area {
+    background-color: transparent;
+    overflow: auto;
+}
+
+.popup {
+    display: none;
+    position: absolute;
+    width: 60%;
+    height: 75%;
+    top: (25%/2);
+    bottom: (25%/2);
+    left: (15%);
+    right: (15%);
+    background-color: #555555;
+    box-shadow: 0px 0px 5px #555555;
+}
+
+@font-face {
+    font-family: "Roboto";
+    src: url("../fonts/roboto/Roboto-Regular.eot");
+    src: url("../fonts/roboto/Roboto-Regular.woff")format("woff");
+}

@@ -1,0 +1,64 @@
+#editor-table {
+    background-color: #424242;
+    width: 90%;
+    margin-left: 5%;
+    margin-right: 5%;
+    table-layout: fixed;
+    border-collapse: collapse;
+
+    .student-del-btns {
+        width: 25px;
+        height: 25px;
+        background: url("../icons/close-btn.png") no-repeat;
+        background-size: 50%;
+        background-position: center;
+        background-color: transparent;
+        border: none;
+        &:hover {
+            cursor: pointer;
+        }
+    }
+
+    .table-inputs {
+        width: 100%;
+        background-color: #353535;
+        border: none;
+        color: white;
+        font-family: "Roboto";
+    }
+
+    tr {
+        text-align: center;
+    }
+
+    th+th, td+td {
+        border-left: 3px solid #222222;
+    }
+
+    th, td {
+        padding: 5px;
+        text-align: center;
+        &:last-child {
+            width: 25px;
+            padding: none;
+        }
+    }
+
+    #add-student-row {
+        background-color: #353535;
+    }
+
+    #add-student-btn {
+        width: 100%;
+        border: none;
+        color: white;
+        font-family: "Roboto";
+        background-color: transparent;
+        &:focus {
+            outline: none;
+        }
+        &:hover {
+            cursor: pointer;
+        }
+    }
+}

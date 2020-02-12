@@ -1,0 +1,35 @@
+
+#tab-menu {
+    background-color: #1b1b1b;
+    overflow: hidden;
+    height: 25px;
+    .tab {
+        color: white;
+        font-family: "Roboto";
+        height: inherit;
+        width: 60px;
+        float: left;
+        background-color: inherit;
+        border: none;
+        transition: 0.1s;
+        background-color: #1b1b1b;
+        &:hover {
+            cursor: pointer;
+            background-color: #414141;
+        }
+        &:focus {
+            outline: none;
+        }
+        &.active {
+            background-color: #005faf;
+            &:hover {
+                cursor: pointer;
+                background-color: #016bc2;
+            }
+        }
+    }
+}
+
+.tab-content {
+    display: none;
+}

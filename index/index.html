@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="../style/css/index.css">
+    </head>
+
+    <body>
+        <div id="window-bar">
+            <div id="title">FBLA Community Service Hour Logger</div>
+            <div id="window-btns-container">
+                <button id="min-btn"></button><!--
+                --><button id="max-btn"></button><!--
+                --><button id="close-btn"></button>
+            </div>
+        </div>
+        <div id="tab-menu">
+            <button class="tab" onclick="openTab(event, 'File')">File</button><!--
+            --><button class="tab active" onclick="openTab(event, 'Editor')">Editor</button>
+        </div>
+        <div id="content">
+            <div id="File" class="tab-content">
+                <div class="area">
+                    <h1>File</h1>
+                    <p><button id="openGoogleSheetBtn" class="file-btns" onclick="accessSheets()">Open Google Sheet</button> <input id="google-sheet-loc" class="file-text-inputs" type="url" placeholder="Paste Sheet URL Here"></input></p>
+                    <p><button id="newGoogleSheetBtn" class="file-btns" onclick="createNewSheet()">Save as New Google Sheet</button> <input id="newGoogleSheetName" class="file-text-inputs" type="text" placeholder="Sheet Name"></input></p>
+                    <p><button id="saveGoogleSheetBtn" class="file-btns" onclick="saveSheet()">Save Google Sheet</button></p>
+                    <p><button id="openLocalFile" class="file-btns">Open Local File</button></p>
+                    <p><button id="saveLocalFile" class="file-btns">Save Local File</button></p>
+                </div>
+            </div>
+
+            <div id="Editor" style="display: block;" class="tab-content">
+                <div class="area">
+                    <h1>Editor</h1>
+                    <table id="editor-table">
+                        <thead>
+                            <tr>
+                                <th>Student Number</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Grade Level</th>
+                                <th>Community Hours</th>
+                                <th>Community Service Award</th>
+                                <th></th>
+                            </tr>
+                        </thead><!--
+                        --><tbody></tbody>
+                        <tfoot>
+                            <tr><td id="add-student-row" colspan="7"><button id="add-student-btn" onclick="addStudent()">Add Student</button></td></tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="blocker"></div>
+        <div id="popup-canvas" class="popup">
+            <button id="close-events-btn" onclick="closeHrs()"></button>
+            <h1>Events</h1>
+            <table id="events-table">
+                <thead>
+                    <tr>
+                        <th>Event</th>
+                        <th>Hours</th>
+                        <th></th>
+                    </tr>
+                </thead><!--
+                --><tbody>
+
+                </tbody>
+                <tfoot>
+                    <tr><td id="add-event-row" colspan="3"><button id ="add-event-btn" onclick="addEvent()">Add Event</button></td></tr>
+                </tfoot>
+            </table>
+        </div>
+        <div id="info-bar">Logger>Editor</div>
+    </body>
+
+    <script src="index.js"></script>
+    <script src="sheets.js"></script>
+</html>

@@ -1,0 +1,72 @@
+
+#window-bar {
+    -webkit-app-region: drag;
+    background-color: #1b1b1b;
+    height: 25px;
+    padding: none;
+    margin: 0;
+
+    #title {
+        padding-top: 3px;
+        text-align: center;
+        user-select: none;
+    }
+
+    #window-btns-container {
+        -webkit-app-region: no-drag;
+        position: fixed;
+        top: 0;
+        right: 0;
+        background-color: #1b1b1b;
+        height: 25px;
+
+        @mixin window-btn-mixin($url) {
+            height: 25px;;
+            width: 45px;
+            border: none;
+            background: url($url) no-repeat;
+            background-size: 40%;
+            background-position: center;
+            transition: 0.1s;
+            &:focus {
+                outline: none;
+            }
+            &:hover {
+                cursor: pointer;
+            }
+          }
+
+        #close-btn {
+            @include window-btn-mixin("../icons/close-btn.png");
+            &:hover {
+                background-color: #c80000;
+            }
+        }
+
+        #max-btn {
+            @include window-btn-mixin("../icons/maximize-btn.png");
+            background-size: 30%;
+
+            &:hover {
+                background-color: #414141;
+            }
+        }
+
+        #min-btn {
+            @include window-btn-mixin("../icons/minimize-btn.png");
+
+            &:hover {
+                background-color: #414141;
+            }
+        }
+    }
+}
+
+#info-bar {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 20px;
+    background-color: #005faf;
+    padding-left: 5px;
+}

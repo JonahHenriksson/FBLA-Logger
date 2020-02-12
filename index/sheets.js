@@ -5,7 +5,10 @@ const TOKEN_PATH = 'token.json';
 
 var spreadsheetId = null; // Google ID of spreadsheet, used when saving an opend sheet
 
-var credentials = {"web":{"client_id":"603803812920-51u22957palnoc9hgeq7f16aeie981r9.apps.googleusercontent.com","project_id":"divine-command-251420","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"EYWfzDcdIR4KPfNFi_zul-3q","redirect_uris":["http://localhost"],"javascript_origins":["http://localhost"]}};
+var credentials = {"installed":{"client_id":"603803812920-cm36p2tgfsg7h0ca90dct4a18dv1phlh.apps.googleusercontent.com","project_id":"divine-command-251420","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"nvghqGvvd0GomWJ3oy-dVcWM","redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]}};
+
+var publicAuth = null;
+var publicCallback = null;
 
 // Open Google sheet
 function accessSheets() {
@@ -25,7 +28,7 @@ function saveSheet() {
 
 // Authorize app to access user's Google sheets
 function authorize(credentials, callback) {
-     const {client_secret, client_id, redirect_uris} = credentials.web;
+     const {client_secret, client_id, redirect_uris} = credentials.installed;
      const oAuth2Client = new google.auth.OAuth2(client_id, client_secret, redirect_uris[0]);
    
      fs.readFile(TOKEN_PATH, (err, token) => {
@@ -44,11 +47,24 @@ function getNewToken(oAuth2Client, callback) {
      const { remote } = require('electron');
      const { shell } = remote;
      shell.openExternal(authUrl);
+     document.getElementById("code-popup").style.display = "block";
+     document.getElementById("blocker").style.display = "block";
 }
 
 
 function getCode() {
-
+     document.getElementById("code-popup").style.display = "none";
+     document.getElementById("blocker").style.display = "none";
+     var code = document.getElementById("code-text-input").value;
+     publicAuth.getToken(code, (err, token) => {
+          if (err) return console.error('Error while trying to retrieve access token', err);
+          publicAuth.setCredentials(token);
+               fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+               if (err) return console.error(err);
+                    console.log('Token stored to', TOKEN_PATH);
+               });
+               publicCallback(publicAuth);
+          });
 }
 
 // Callback to open a sheet and parse it
